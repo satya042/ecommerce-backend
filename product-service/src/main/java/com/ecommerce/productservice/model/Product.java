@@ -1,34 +1,49 @@
 package com.ecommerce.productservice.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.UUID;
 
-@AllArgsConstructor
-@NoArgsConstructor
+
 @Data
-@Builder
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "products")
 public class Product {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	@Column(name = "product_id")
+	private UUID productId;
 
-	@NotNull
-	private String name;
+	@Column(unique = true)
+	private String sku;
 
-	@NotNull
+	@Column(name = "product_title")
+	private String productTitle;
+
+	@Column(length = 500)
 	private String description;
 
-	@NotNull
+	@Column(precision = 10, scale = 2)
 	private BigDecimal price;
+
+	private  Integer quantity;
+
+	@Column(length = 100)
+	private String brand;
+
+	@Column(name = "product_status")
+	private ProductStatus productStatus;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "category_id")
+	private Category category;
 }
