@@ -23,11 +23,15 @@
     <module>inventory-service</module>
     <module>product-service</module>
     <module>discovery-server</module>
+    <module>notification-service</module>
+    <module>notification-service</module>
+    <module>user-service</module>
   </modules>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <spring-cloud.version>2023.0.1</spring-cloud.version>
+    <org.lombok.version>1.18.30</org.lombok.version>
   </properties>
 
   <dependencies>
@@ -55,6 +59,17 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>${org.lombok.version}</version>
+        <optional>true</optional>
+      </dependency>
+<!--      <dependency>-->
+<!--        <groupId>org.projectlombok</groupId>-->
+<!--        <artifactId>lombok</artifactId>-->
+<!--        <optional>true</optional>-->
+<!--      </dependency>-->
     </dependencies>
   </dependencyManagement>
 

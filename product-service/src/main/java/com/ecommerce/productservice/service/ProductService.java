@@ -1,39 +1,23 @@
 package com.ecommerce.productservice.service;
 
-import lombok.extern.slf4j.Slf4j;
-import com.ecommerce.productservice.model.Product;
-import com.ecommerce.productservice.repository.ProductRepository;
-import com.ecommerce.productservice.request.ProductRequest;
-import com.ecommerce.productservice.response.ProductResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.ecommerce.productservice.dto.request.ProductRequest;
+import com.ecommerce.productservice.dto.response.ProductResponse;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
+import java.util.UUID;
 
-@Service
-@Slf4j
-public class ProductService {
+public interface ProductService {
 
-	@Autowired
-	private ProductRepository productRepository;
+    ProductResponse createProduct(ProductRequest productRequest);
 
-	public void createProduct(ProductRequest productRequest) {
-		Product product = Product.builder().name(productRequest.getName()).description(productRequest.getDescription())
-				.price(productRequest.getPrice()).build();
+    ProductResponse updateProduct(UUID productId, ProductRequest productRequest);
 
-		productRepository.save(product);
-		log.info("Product {} is saved", product.getId());
-	}
+    ProductResponse getProductById(UUID productId);
 
-	public List<ProductResponse> getAllProducts(){
-		List<Product> products = productRepository.findAll(); // Read all the products inside the database
-		return products.stream().map(this::mapToProductResponse).toList(); 
-		// this::mapToProductResponse ==> map.(product -> mapToProductResponse(mapToProductResponse))
-		// Method Reference in same class   --> Lambda method							
-	}
+    List<ProductResponse> getAllProducts();
 
-	private ProductResponse mapToProductResponse(Product product) {
-		return ProductResponse.builder().id(product.getId()).name(product.getName())
-				.description(product.getDescription()).price(product.getPrice()).build();
-	}
+    Page<ProductResponse> getProducts(int page, int size);
+
+    void deleteProduct(UUID productId);
 }
