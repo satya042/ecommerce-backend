@@ -1,9 +1,9 @@
-package com.ecommerce.userservice.model.entity;
+package com.ecommerce.userservice.entity;
 
+import com.ecommerce.userservice.entity.enums.Gender;
+import com.ecommerce.userservice.entity.enums.Role;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,52 +14,33 @@ import java.util.Collections;
 
 @Data
 @Entity
-@Table(name = "users")
-@NoArgsConstructor
-@AllArgsConstructor
+@Table(name = "app_users")
 public class User implements UserDetails {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "full_name", nullable = false)
-    private String fullname;
+    @Column(nullable = false)
+    private String fullName;
 
-    @Column(name = "username", unique = true, nullable = false)
+    @Column(unique = true, nullable = false)
     private String username;
 
-    @Column(name = "email", unique = true, nullable = false)
-    private String email;
-
-    @Column(name = "password", nullable = false)
+    @Column(nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "gender")
     private Gender gender;
 
-    @Column(name = "avatar")
     private String avatar;
 
-    @Column(name = "phone_number", unique = true)
+    @Column(unique = true)
     private String phone;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
-    private Role role = Role.USER;
-
-    @Column(name = "is_enabled", nullable = false)
-    private Boolean isEnabled = true;
-
-    @Column(name = "is_account_non_locked", nullable = false)
-    private Boolean isAccountNonLocked = true;
-
-    @Column(name = "is_credentials_non_expired", nullable = false)
-    private Boolean isCredentialsNonExpired = true;
-
-    @Column(name = "is_account_non_expired", nullable = false)
-    private Boolean isAccountNonExpired = true;
+    private Role role;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -78,37 +59,33 @@ public class User implements UserDetails {
         updatedAt = LocalDateTime.now();
     }
 
-    // UserDetails implementation
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role.name()));
     }
 
     @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
     public boolean isAccountNonExpired() {
-        return isAccountNonExpired;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return isAccountNonLocked;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return isCredentialsNonExpired;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return isEnabled;
-    }
-
-    public enum Gender {
-        MALE, FEMALE, OTHER
-    }
-
-    public enum Role {
-        USER, ADMIN, MODERATOR
+        return true;
     }
 }

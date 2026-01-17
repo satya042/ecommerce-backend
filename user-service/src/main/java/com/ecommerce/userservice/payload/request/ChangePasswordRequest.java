@@ -1,4 +1,4 @@
-package com.ecommerce.userservice.model.request;
+package com.ecommerce.userservice.payload.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

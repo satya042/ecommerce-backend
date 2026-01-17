@@ -1,4 +1,4 @@
-package com.ecommerce.userservice.model.request;
+package com.ecommerce.userservice.payload.request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class LoginRequest {
 
     @NotBlank(message = "Username or Email must not be blank")
-    private String  usernameOrEmail;
+    private String  username;
 
     @NotBlank(message = "Password must not be blank")
     private String password;

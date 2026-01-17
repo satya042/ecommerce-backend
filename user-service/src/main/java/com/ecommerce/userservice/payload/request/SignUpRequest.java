@@ -1,4 +1,4 @@
-package com.ecommerce.userservice.model.request;
+package com.ecommerce.userservice.payload.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -14,16 +14,11 @@ import lombok.NoArgsConstructor;
 public class SignUpRequest {
     @NotBlank(message = "Full name must not be blank")
     @Size(min = 2, max = 50, message = "Full name must be between 2 and 50 characters")
-    private String fullname;
-
-    @NotBlank(message = "Username must not be blank")
-    @Size(min = 3, max = 20, message = "Username must be between 3 and 20 characters")
-    @Pattern(regexp = "^[a-zA-Z0-9_]+$", message = "Username can only contain letters, numbers, and underscores")
-    private String username;
+    private String fullName;
 
     @NotBlank(message = "Email must not be blank")
     @Email(message = "Invalid email format")
-    private String email;
+    private String username;
 
     @NotBlank(message = "Password must not be blank")
     @Size(min = 8, max = 100, message = "Password must be between 8 and 100 characters")

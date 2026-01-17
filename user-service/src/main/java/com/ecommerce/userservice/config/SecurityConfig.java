@@ -32,20 +32,10 @@ import java.util.Arrays;
 public class SecurityConfig {
 
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    private final UserDetailsService userDetailsService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
     }
 
     @Bean
@@ -67,26 +57,18 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
         http
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(authz -> authz
-                .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/password/**").permitAll()
-                .requestMatchers("/api/users/profile").authenticated()
-                .requestMatchers("/api/users/change-password").authenticated()
-                .requestMatchers("/api/users").hasRole("ADMIN")
-                .requestMatchers("/api/users/**").hasRole("ADMIN")
-                .anyRequest().authenticated()
-            )
+                .requestMatchers("/api/password/forgot", "/api/auth/**").permitAll()
+                .requestMatchers("/api/password/reset", "/api/auth/refresh", "/api/auth/logout","/api/users/**").authenticated()
+                .anyRequest().authenticated())
             .exceptionHandling(ex -> ex
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-            )
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint))
             .sessionManagement(session -> session
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            )
-            .authenticationProvider(authenticationProvider())
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
