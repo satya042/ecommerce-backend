@@ -13,11 +13,11 @@ public interface CategoryService {
 
     Page<CategoryResponse> getAllCategoriesWithPaged(int page, int size);
 
-    CategoryResponse getCategoryById(int categoryId);
+    CategoryResponse getCategoryById(Long categoryId);
 
     CategoryResponse createCategory(@Valid CategoryRequest categoryRequest);
 
-    CategoryResponse updateCategory(int categoryId, @Valid CategoryRequest categoryRequest);
+    CategoryResponse updateCategory(Long categoryId, @Valid CategoryRequest categoryRequest);
 
-    void deleteCategory(int categoryId);
+    void deleteCategory(Long categoryId);
 }

@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @Builder
 public class CategoryResponse {
-    private Integer categoryId;
+    private Long categoryId;
     private String categoryTitle;
     private CategoryResponse parentCategory;
 }

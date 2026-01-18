@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.ecommerce</groupId>
-        <artifactId>Ecommerce-backend</artifactId>
+        <artifactId>ecommerce-backend</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 

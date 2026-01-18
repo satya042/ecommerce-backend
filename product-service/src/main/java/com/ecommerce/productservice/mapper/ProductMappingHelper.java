@@ -1,12 +1,9 @@
 package com.ecommerce.productservice.mapper;
 
 import com.ecommerce.productservice.dto.response.ProductResponse;
-import com.ecommerce.productservice.model.Product;
+import com.ecommerce.productservice.entity.Product;
 
 public final class ProductMappingHelper {
-
-    private ProductMappingHelper() {
-    }
 
     public static ProductResponse productToResponse(Product product) {
         if (product == null) {

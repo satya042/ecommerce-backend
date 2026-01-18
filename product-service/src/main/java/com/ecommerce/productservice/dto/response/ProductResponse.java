@@ -1,19 +1,17 @@
 package com.ecommerce.productservice.dto.response;
 
-import com.ecommerce.productservice.model.ProductStatus;
-
+import com.ecommerce.productservice.entity.ProductStatus;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @Getter
 @Setter
 @Builder
 public class ProductResponse {
-    private UUID productId;
+    private Long productId;
     private String sku;
     private String productTitle;
     private String description;

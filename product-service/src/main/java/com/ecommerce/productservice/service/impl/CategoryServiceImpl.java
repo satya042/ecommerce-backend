@@ -6,7 +6,7 @@ import com.ecommerce.productservice.Exception.DuplicateResourceException;
 import com.ecommerce.productservice.dto.request.CategoryRequest;
 import com.ecommerce.productservice.dto.response.CategoryResponse;
 import com.ecommerce.productservice.mapper.CategoryMappingHelper;
-import com.ecommerce.productservice.model.Category;
+import com.ecommerce.productservice.entity.Category;
 import com.ecommerce.productservice.repository.CategoryRepository;
 import com.ecommerce.productservice.service.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -46,7 +46,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional(readOnly = true)
-    public CategoryResponse getCategoryById(int categoryId) {
+    public CategoryResponse getCategoryById(Long categoryId) {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new CategoryNotFoundException("Category not found with id: " + categoryId));
         return CategoryMappingHelper.categoryToResponse(category);
@@ -73,7 +73,7 @@ public class CategoryServiceImpl implements CategoryService {
     
     @Override
     @Transactional
-    public CategoryResponse updateCategory(int categoryId, CategoryRequest categoryRequest) {
+    public CategoryResponse updateCategory(Long categoryId, CategoryRequest categoryRequest) {
         String categoryTitle = categoryRequest.getCategoryTitle().trim();
         Category parentCategory = null;
         Category existingCategory = categoryRepository.findById(categoryId)
@@ -93,7 +93,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional
-    public void deleteCategory(int categoryId) {
+    public void deleteCategory(Long categoryId) {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new CategoryNotFoundException("Category not found with id: " + categoryId));
 
@@ -107,7 +107,7 @@ public class CategoryServiceImpl implements CategoryService {
         categoryRepository.delete(category);
     }
 
-    private Category validateParentCategory(Integer parentCategoryId, Integer currentCategoryId) {
+    private Category validateParentCategory(Long parentCategoryId, Long currentCategoryId) {
         if (parentCategoryId == null) {
             return null;
         }

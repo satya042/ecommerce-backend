@@ -1,11 +1,8 @@
-package com.ecommerce.productservice.model;
+package com.ecommerce.productservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import java.util.Set;
 
@@ -14,14 +11,15 @@ import java.util.Set;
 @Entity
 @Builder
 @AllArgsConstructor
-@RequiredArgsConstructor
+@NoArgsConstructor
+@Table(name = "categories")
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
-    private Integer categoryId;
+    private Long categoryId;
 
-    @Column(name = "category_title")
+    @Column(name = "category_title", nullable = false)
     private String categoryTitle;
 
     @JsonIgnore

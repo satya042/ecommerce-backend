@@ -27,7 +27,9 @@ public class CategoryController {
 
     @GetMapping
     public ResponseEntity<List<CategoryResponse>> getAllCategories(){
+
         log.info("Fetching all categories");
+
         List<CategoryResponse> categories = categoryService.getAllCategories();
         return ResponseEntity.ok().body(categories);
     }
@@ -36,13 +38,16 @@ public class CategoryController {
     public ResponseEntity<Page<CategoryResponse>> getAllCategoriesPaged(
             @RequestParam(defaultValue = "0") @Min(value = 0, message = "Page index must be zero or positive") int page,
             @RequestParam(defaultValue = "10") @Positive(message = "Page size must be greater than zero") int size){
+
         log.info("Fetching categories with paging: page={}, size={}", page, size);
+
         Page<CategoryResponse> categoryPage = categoryService.getAllCategoriesWithPaged(page, size);
         return ResponseEntity.ok().body(categoryPage);
     }
 
     @GetMapping("/{categoryId}")
-    public ResponseEntity<CategoryResponse> getCategory(@PathVariable("categoryId") @Positive(message = "Category id must be greater than zero") final Integer categoryId) {
+    public ResponseEntity<CategoryResponse> getCategory(
+            @PathVariable("categoryId") @Positive(message = "Category id must be greater than zero") final Long categoryId) {
         log.info("Fetching category with id={}", categoryId);
         CategoryResponse category = categoryService.getCategoryById(categoryId);
         return ResponseEntity.ok(category);
@@ -56,16 +61,20 @@ public class CategoryController {
     }
 
     @PutMapping("/{categoryId}")
-    public ResponseEntity<CategoryResponse> update(@PathVariable("categoryId") @Positive(message = "Category id must be greater than zero") final Integer categoryId,
-                                                   @RequestBody @Valid CategoryRequest categoryRequest){
+    public ResponseEntity<CategoryResponse> update(
+            @PathVariable("categoryId") @Positive(message = "Category id must be greater than zero") final Long categoryId,
+            @RequestBody @Valid CategoryRequest categoryRequest){
         log.info("Updating category with category id = {} ", categoryId);
         CategoryResponse updatedCategory = categoryService.updateCategory(categoryId, categoryRequest);
         return ResponseEntity.ok().body(updatedCategory);
     }
 
     @DeleteMapping("/{categoryId}")
-    public ResponseEntity<Void> delete(@PathVariable("categoryId") @Positive(message = "Category id must be greater than zero") final Integer categoryId){
+    public ResponseEntity<Void> delete(
+            @PathVariable("categoryId") @Positive(message = "Category id must be greater than zero") final Long categoryId){
+
         log.info("Deleting category with category id = {} ", categoryId);
+
         categoryService.deleteCategory(categoryId);
         return ResponseEntity.noContent().build();
     }

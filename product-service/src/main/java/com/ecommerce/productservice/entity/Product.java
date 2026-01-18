@@ -1,4 +1,4 @@
-package com.ecommerce.productservice.model;
+package com.ecommerce.productservice.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -21,8 +21,7 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "product_id")
-
-	private UUID productId;
+	private Long productId;
 
 	@Column(unique = true)
 	private String sku;
@@ -41,10 +40,11 @@ public class Product {
 	@Column(length = 100)
 	private String brand;
 
+	@Enumerated(EnumType.STRING)
 	@Column(name = "product_status")
 	private ProductStatus productStatus;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "category_id")
+	@JoinColumn(name = "category_id", nullable = false)
 	private Category category;
 }

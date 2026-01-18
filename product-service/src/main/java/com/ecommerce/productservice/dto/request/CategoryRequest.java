@@ -26,7 +26,7 @@ public class CategoryRequest {
 @AllArgsConstructor
     public static class ParentCategory {
         @Positive(message = "Parent category id must be greater than zero")
-        private Integer parentCategoryId;
+        private Long parentCategoryId;
 
         @NotBlank(message = "Parent Category title cannot be blank")
         private String parentCategoryTitle;

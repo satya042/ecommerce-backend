@@ -1,7 +1,7 @@
 package com.ecommerce.productservice.mapper;
 
 import com.ecommerce.productservice.dto.response.CategoryResponse;
-import com.ecommerce.productservice.model.Category;
+import com.ecommerce.productservice.entity.Category;
 
 public interface CategoryMappingHelper {
 

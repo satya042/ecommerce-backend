@@ -1,13 +1,12 @@
 package com.ecommerce.productservice.service.impl;
 
 import com.ecommerce.productservice.Exception.CategoryNotFoundException;
-import com.ecommerce.productservice.Exception.DuplicateResourceException;
 import com.ecommerce.productservice.Exception.ProductNotFoundException;
 import com.ecommerce.productservice.dto.request.ProductRequest;
 import com.ecommerce.productservice.dto.response.ProductResponse;
 import com.ecommerce.productservice.mapper.ProductMappingHelper;
-import com.ecommerce.productservice.model.Category;
-import com.ecommerce.productservice.model.Product;
+import com.ecommerce.productservice.entity.Category;
+import com.ecommerce.productservice.entity.Product;
 import com.ecommerce.productservice.repository.CategoryRepository;
 import com.ecommerce.productservice.repository.ProductRepository;
 import com.ecommerce.productservice.service.ProductService;
@@ -48,7 +47,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public ProductResponse getProductById(UUID productId) {
+	public ProductResponse getProductById(Long productId) {
 		Product product = productRepository.findById(productId)
 				.orElseThrow(() -> new ProductNotFoundException("Product not found with id: " + productId));
 		return ProductMappingHelper.productToResponse(product);
@@ -68,7 +67,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public ProductResponse updateProduct(UUID productId, ProductRequest productRequest) {
+	public ProductResponse updateProduct(Long productId, ProductRequest productRequest) {
 		Product product = productRepository.findById(productId)
 				.orElseThrow(() -> new ProductNotFoundException("Product not found with id: " + productId));
 
@@ -81,7 +80,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public void deleteProduct(UUID productId) {
+	public void deleteProduct(Long productId) {
 		Product product = productRepository.findById(productId)
 				.orElseThrow(() -> new ProductNotFoundException("Product not found with id: " + productId));
 		productRepository.delete(product);
@@ -103,7 +102,7 @@ public class ProductServiceImpl implements ProductService {
         .build();
 	}
 
-	private Category resolveCategory(Integer categoryId) {
+	private Category resolveCategory(Long categoryId) {
 		return categoryRepository.findById(categoryId)
 				.orElseThrow(() -> new CategoryNotFoundException("Category not found with id: " + categoryId));
 	}

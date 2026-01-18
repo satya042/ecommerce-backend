@@ -51,26 +51,30 @@ public class ProductController {
     public ResponseEntity<Page<ProductResponse>> getProductsPaged(
             @RequestParam(defaultValue = "0") @Min(value = 0, message = "Page index must be zero or positive") int page,
             @RequestParam(defaultValue = "10") @Positive(message = "Page size must be greater than zero") int size) {
+
         log.info("Fetching products with paging page={}, size={}", page, size);
         return ResponseEntity.ok(productService.getProducts(page, size));
     }
 
     @GetMapping("/{productId}")
-    public ResponseEntity<ProductResponse> getProduct(@PathVariable("productId") UUID productId) {
+    public ResponseEntity<ProductResponse> getProduct(@PathVariable("productId") Long productId) {
         log.info("Fetching product with id={}", productId);
         return ResponseEntity.ok(productService.getProductById(productId));
     }
 
     @PutMapping("/{productId}")
-    public ResponseEntity<ProductResponse> updateProduct(@PathVariable("productId") UUID productId, @RequestBody @Valid ProductRequest productRequest) {
+    public ResponseEntity<ProductResponse> updateProduct(
+            @PathVariable("productId") Long productId, @RequestBody @Valid ProductRequest productRequest) {
         log.info("Updating product with id={}", productId);
+
         ProductResponse response = productService.updateProduct(productId, productRequest);
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{productId}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable("productId") UUID productId) {
+    public ResponseEntity<Void> deleteProduct(@PathVariable("productId") Long productId) {
         log.info("Deleting product with id={}", productId);
+
         productService.deleteProduct(productId);
         return ResponseEntity.noContent().build();
     }

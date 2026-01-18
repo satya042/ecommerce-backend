@@ -1,6 +1,6 @@
 package com.ecommerce.productservice.dto.request;
 
-import com.ecommerce.productservice.model.ProductStatus;
+import com.ecommerce.productservice.entity.ProductStatus;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,5 +36,5 @@ public class ProductRequest {
 	private ProductStatus productStatus;
 
 	@NotNull(message = "Category id is required")
-	private Integer categoryId;
+	private Long categoryId;
 }
